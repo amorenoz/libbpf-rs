@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -ex
 
 SRC=$(find bin/src/ -name "*.bpf.c")
 BPFTOOL=""
@@ -43,7 +43,7 @@ function compile() {
     base=$(basename -- $file)
     objname="${base%.*}"
     objname+=".o"
-    clang -g -O2 -target bpf -c $1 -o bin/$objname
+    clang -g -O2 -D__TARGET_ARCH_x86 -target bpf -c $1 -o bin/$objname
 }
 
 if [[ ! -z $BPFTOOL ]]; then

@@ -16,7 +16,10 @@ int handle__usdt(void *ctx)
 
     value = bpf_ringbuf_reserve(&ringbuf, sizeof(int), 0);
     if (value) {
-        *value = 1;
+        long x;
+        //*value = 1;
+        bpf_usdt_arg(ctx, 0, &x);
+        *value = x;
         bpf_ringbuf_submit(value, 0);
     }
 
